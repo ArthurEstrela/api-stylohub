@@ -1,4 +1,0 @@
-ALTER TABLE profiles
-    ADD COLUMN IF NOT EXISTS bio            VARCHAR(160),
-    ADD COLUMN IF NOT EXISTS seo_title      VARCHAR(60),
-    ADD COLUMN IF NOT EXISTS seo_description VARCHAR(160);
