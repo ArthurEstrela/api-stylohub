@@ -19,6 +19,7 @@ public class Profile extends AggregateRoot {
     private final UUID id;
     private final UUID userId;
     private String username;
+    private String displayName;
     private String avatarUrl;
     private String bio;
     private String seoTitle;
@@ -109,17 +110,23 @@ public class Profile extends AggregateRoot {
         this.avatarUrl = url;
     }
 
-    public void updateSeoSettings(String bio, String seoTitle, String seoDescription) {
+    public void updateProfileInfo(String displayName, String bio) {
+        this.displayName = displayName;
         this.bio = bio;
+    }
+
+    public void updateSeoSettings(String seoTitle, String seoDescription) {
         this.seoTitle = seoTitle;
         this.seoDescription = seoDescription;
     }
 
     public static Profile reconstitute(UUID id, UUID userId, String username,
-                                       String avatarUrl, String bio, String seoTitle,
+                                       String displayName, String avatarUrl,
+                                       String bio, String seoTitle,
                                        String seoDescription, Theme theme,
                                        Subscription subscription, List<Widget> widgets) {
         Profile profile = new Profile(id, userId, username, theme, subscription);
+        profile.displayName = displayName;
         profile.avatarUrl = avatarUrl;
         profile.bio = bio;
         profile.seoTitle = seoTitle;
@@ -131,6 +138,7 @@ public class Profile extends AggregateRoot {
     public UUID getId() { return id; }
     public UUID getUserId() { return userId; }
     public String getUsername() { return username; }
+    public String getDisplayName() { return displayName; }
     public String getAvatarUrl() { return avatarUrl; }
     public String getBio() { return bio; }
     public String getSeoTitle() { return seoTitle; }

@@ -25,6 +25,7 @@ public class JpaProfileMapper {
                 .id(profile.getId())
                 .userId(profile.getUserId())
                 .username(profile.getUsername())
+                .displayName(profile.getDisplayName())
                 .avatarUrl(profile.getAvatarUrl())
                 .bio(profile.getBio())
                 .seoTitle(profile.getSeoTitle())
@@ -68,6 +69,7 @@ public class JpaProfileMapper {
 
         return Profile.reconstitute(
                 entity.getId(), entity.getUserId(), entity.getUsername(),
+                entity.getDisplayName(),
                 entity.getAvatarUrl(), entity.getBio(), entity.getSeoTitle(),
                 entity.getSeoDescription(), theme, subscription, widgets
         );

@@ -67,10 +67,17 @@ public class WebProfileMapper {
                 profile.getTheme().getBorderColor(),
                 profile.getTheme().getShadowStyle().name()
         );
-        return new ProfileResponse(profile.getId(), profile.getUsername(),
-                profile.getAvatarUrl(), profile.getBio(), profile.getSeoTitle(),
-                profile.getSeoDescription(), theme,
-                profile.getSubscription().getPlan().name(), widgets);
+        return new ProfileResponse(
+                profile.getId(),
+                profile.getUsername(),
+                profile.getDisplayName(),
+                profile.getAvatarUrl(),
+                profile.getBio(),
+                profile.getSeoTitle(),
+                profile.getSeoDescription(),
+                theme,
+                profile.getSubscription().getPlan().name(),
+                widgets);
     }
 
     private WidgetResponse toWidgetResponse(Widget widget) {

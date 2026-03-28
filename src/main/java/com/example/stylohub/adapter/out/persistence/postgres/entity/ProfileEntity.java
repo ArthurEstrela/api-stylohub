@@ -26,6 +26,9 @@ public class ProfileEntity {
     @Column(nullable = false, unique = true, length = 50)
     private String username;
 
+    @Column(name = "display_name", length = 80)
+    private String displayName;
+
     // Theme fields (Value Object achatado em colunas)
     @Column(name = "bg_type", nullable = false, length = 20)
     private String bgType;

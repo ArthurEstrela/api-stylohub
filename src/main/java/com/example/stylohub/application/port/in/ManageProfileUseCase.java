@@ -19,7 +19,8 @@ public interface ManageProfileUseCase {
     Profile reorderWidgets(UUID profileId, List<UUID> orderedWidgetIds);
     Profile toggleWidgetVisibility(UUID profileId, UUID widgetId);
     Profile updateAvatarUrl(UUID profileId, String avatarUrl);
-    Profile updateSeoSettings(UUID profileId, String bio, String seoTitle, String seoDescription);
+    Profile updateProfileInfo(UUID profileId, String displayName, String bio);
+    Profile updateSeoSettings(UUID profileId, String seoTitle, String seoDescription);
     Profile upgradeSubscription(UUID profileId, PlanType newPlan);
     Profile getProfileByUsername(String username);
     Profile getProfileByUserId(UUID userId);

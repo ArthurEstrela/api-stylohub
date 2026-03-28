@@ -62,7 +62,7 @@ public class AuthService implements AuthUseCase {
         eventPublisher.publishAll(saved.getDomainEvents());
         saved.clearEvents();
 
-        String token = jwtService.generateToken(saved.getId().toString(), saved.getEmail());
+        String token = jwtService.generateToken(saved.getId().toString(), saved.getEmail(), command.username());
         return new AuthTokenDTO(token, jwtService.getExpirationMs());
     }
 
@@ -83,7 +83,8 @@ public class AuthService implements AuthUseCase {
             throw new DomainValidationException("Credenciais inválidas.");
         }
 
-        String token = jwtService.generateToken(user.getId().toString(), user.getEmail());
+        String username = profileService.getProfileByUserId(user.getId()).getUsername();
+        String token = jwtService.generateToken(user.getId().toString(), user.getEmail(), username);
         return new AuthTokenDTO(token, jwtService.getExpirationMs());
     }
 
@@ -106,7 +107,8 @@ public class AuthService implements AuthUseCase {
             throw new BusinessRuleViolationException("Esta conta foi desativada.");
         }
 
-        String token = jwtService.generateToken(user.getId().toString(), user.getEmail());
+        String username = profileService.getProfileByUserId(user.getId()).getUsername();
+        String token = jwtService.generateToken(user.getId().toString(), user.getEmail(), username);
         return new AuthTokenDTO(token, jwtService.getExpirationMs());
     }
 

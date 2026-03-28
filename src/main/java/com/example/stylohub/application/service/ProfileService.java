@@ -147,9 +147,16 @@ public class ProfileService implements ManageProfileUseCase {
     }
 
     @Override
-    public Profile updateSeoSettings(UUID profileId, String bio, String seoTitle, String seoDescription) {
+    public Profile updateProfileInfo(UUID profileId, String displayName, String bio) {
         Profile profile = loadProfile(profileId);
-        profile.updateSeoSettings(bio, seoTitle, seoDescription);
+        profile.updateProfileInfo(displayName, bio);
+        return profileRepo.save(profile);
+    }
+
+    @Override
+    public Profile updateSeoSettings(UUID profileId, String seoTitle, String seoDescription) {
+        Profile profile = loadProfile(profileId);
+        profile.updateSeoSettings(seoTitle, seoDescription);
         return profileRepo.save(profile);
     }
 

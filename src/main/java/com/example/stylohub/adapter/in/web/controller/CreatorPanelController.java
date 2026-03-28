@@ -43,13 +43,13 @@ public class CreatorPanelController {
     }
 
     @PatchMapping("/profile/seo")
-    @Operation(summary = "Atualiza bio e configurações de SEO do perfil")
+    @Operation(summary = "Atualiza configurações de SEO do perfil")
     ProfileResponse updateSeo(@AuthenticationPrincipal StyloHubUserPrincipal principal,
                               @Valid @RequestBody UpdateSeoRequest request) {
         Profile profile = profileUseCase.getProfileByUserId(principal.getUserIdAsUUID());
         return mapper.toCreatorResponse(
                 profileUseCase.updateSeoSettings(profile.getId(),
-                        request.bio(), request.seoTitle(), request.seoDescription())
+                        request.seoTitle(), request.seoDescription())
         );
     }
 
@@ -64,6 +64,17 @@ public class CreatorPanelController {
         }
         return mapper.toCreatorResponse(
                 profileUseCase.updateAvatarUrl(profile.getId(), url)
+        );
+    }
+
+    @PatchMapping("/profile/info")
+    @Operation(summary = "Atualiza nome de exibição e bio do perfil")
+    ProfileResponse updateProfileInfo(@AuthenticationPrincipal StyloHubUserPrincipal principal,
+                                      @Valid @RequestBody UpdateProfileInfoRequest request) {
+        Profile profile = profileUseCase.getProfileByUserId(principal.getUserIdAsUUID());
+        return mapper.toCreatorResponse(
+                profileUseCase.updateProfileInfo(profile.getId(),
+                        request.displayName(), request.bio())
         );
     }
 
