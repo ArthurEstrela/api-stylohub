@@ -63,7 +63,7 @@ public class AuthService implements AuthUseCase {
         saved.clearEvents();
 
         String token = jwtService.generateToken(saved.getId().toString(), saved.getEmail(), command.username());
-        return new AuthTokenDTO(token, jwtService.getExpirationMs());
+        return new AuthTokenDTO(token, jwtService.getExpirationMs(), command.username(), saved.getEmail());
     }
 
     @Override
@@ -85,7 +85,7 @@ public class AuthService implements AuthUseCase {
 
         String username = profileService.getProfileByUserId(user.getId()).getUsername();
         String token = jwtService.generateToken(user.getId().toString(), user.getEmail(), username);
-        return new AuthTokenDTO(token, jwtService.getExpirationMs());
+        return new AuthTokenDTO(token, jwtService.getExpirationMs(), username, user.getEmail());
     }
 
     @Override
@@ -109,7 +109,7 @@ public class AuthService implements AuthUseCase {
 
         String username = profileService.getProfileByUserId(user.getId()).getUsername();
         String token = jwtService.generateToken(user.getId().toString(), user.getEmail(), username);
-        return new AuthTokenDTO(token, jwtService.getExpirationMs());
+        return new AuthTokenDTO(token, jwtService.getExpirationMs(), username, user.getEmail());
     }
 
     private String generateUsernameFromEmail(String email) {
