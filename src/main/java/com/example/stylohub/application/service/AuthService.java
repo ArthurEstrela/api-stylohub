@@ -63,7 +63,7 @@ public class AuthService implements AuthUseCase {
         saved.clearEvents();
 
         String token = jwtService.generateToken(saved.getId().toString(), saved.getEmail(), command.username());
-        return new AuthTokenDTO(token, jwtService.getExpirationMs(), command.username(), saved.getEmail());
+        return new AuthTokenDTO(token, jwtService.getExpirationMs(), saved.getId().toString(), command.username(), saved.getEmail());
     }
 
     @Override
@@ -85,7 +85,7 @@ public class AuthService implements AuthUseCase {
 
         String username = profileService.getProfileByUserId(user.getId()).getUsername();
         String token = jwtService.generateToken(user.getId().toString(), user.getEmail(), username);
-        return new AuthTokenDTO(token, jwtService.getExpirationMs(), username, user.getEmail());
+        return new AuthTokenDTO(token, jwtService.getExpirationMs(), user.getId().toString(), username, user.getEmail());
     }
 
     @Override
@@ -109,7 +109,16 @@ public class AuthService implements AuthUseCase {
 
         String username = profileService.getProfileByUserId(user.getId()).getUsername();
         String token = jwtService.generateToken(user.getId().toString(), user.getEmail(), username);
-        return new AuthTokenDTO(token, jwtService.getExpirationMs(), username, user.getEmail());
+        return new AuthTokenDTO(token, jwtService.getExpirationMs(), user.getId().toString(), username, user.getEmail());
+    }
+
+    @Override
+    public AuthTokenDTO refreshAccess(UUID userId) {
+        User user = userRepo.findById(userId)
+                .orElseThrow(() -> new DomainValidationException("Utilizador não encontrado."));
+        String username = profileService.getProfileByUserId(userId).getUsername();
+        String token = jwtService.generateToken(userId.toString(), user.getEmail(), username);
+        return new AuthTokenDTO(token, jwtService.getExpirationMs(), userId.toString(), username, user.getEmail());
     }
 
     private String generateUsernameFromEmail(String email) {

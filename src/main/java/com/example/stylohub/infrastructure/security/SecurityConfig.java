@@ -40,7 +40,9 @@ public class SecurityConfig {
                         // Preflight CORS
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         // Públicos — sem autenticação
-                        .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/register",
+                                "/api/auth/logout", "/api/auth/refresh",
+                                "/api/auth/forgot-password", "/api/auth/reset-password").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/p/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/p/**").permitAll()  // Widget click tracking
                         .requestMatchers(HttpMethod.POST, "/api/webhooks/**").permitAll()  // Stripe webhooks

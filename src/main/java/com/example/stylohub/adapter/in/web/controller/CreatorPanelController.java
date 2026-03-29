@@ -29,6 +29,7 @@ import java.util.regex.Pattern;
 public class CreatorPanelController {
 
     private static final Pattern SAFE_URL = Pattern.compile("^https?://\\S+$", Pattern.CASE_INSENSITIVE);
+    private static final java.util.Set<String> ALLOWED_FOLDERS = java.util.Set.of("profiles", "backgrounds", "widgets");
 
     private final ManageProfileUseCase profileUseCase;
     private final ManageLeadsUseCase manageLeadsUseCase;
@@ -175,6 +176,9 @@ public class CreatorPanelController {
     Map<String, String> uploadImage(@AuthenticationPrincipal StyloHubUserPrincipal principal,
                                     @RequestParam("file") MultipartFile file,
                                     @RequestParam(value = "folder", defaultValue = "profiles") String folder) {
+        if (!ALLOWED_FOLDERS.contains(folder)) {
+            throw new IllegalArgumentException("Pasta inválida. Valores aceitos: " + ALLOWED_FOLDERS);
+        }
         String url = imageStorage.upload(file, folder);
         return Map.of("url", url);
     }

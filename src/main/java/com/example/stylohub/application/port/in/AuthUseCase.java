@@ -4,8 +4,11 @@ import com.example.stylohub.application.command.RegisterUserCommand;
 import com.example.stylohub.application.dto.AuthTokenDTO;
 import com.example.stylohub.domain.model.OAuthProvider;
 
+import java.util.UUID;
+
 public interface AuthUseCase {
     AuthTokenDTO register(RegisterUserCommand command);
     AuthTokenDTO login(String email, String password);
     AuthTokenDTO loginWithOAuth(String email, OAuthProvider provider);
+    AuthTokenDTO refreshAccess(UUID userId);
 }
