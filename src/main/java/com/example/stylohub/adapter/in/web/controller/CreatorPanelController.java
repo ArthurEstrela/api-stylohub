@@ -20,12 +20,15 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("/api/creator")
 @Tag(name = "Creator Panel", description = "Gerenciamento do perfil do criador")
 @SecurityRequirement(name = "bearerAuth")
 public class CreatorPanelController {
+
+    private static final Pattern SAFE_URL = Pattern.compile("^https?://\\S+$", Pattern.CASE_INSENSITIVE);
 
     private final ManageProfileUseCase profileUseCase;
     private final ManageLeadsUseCase manageLeadsUseCase;
@@ -61,6 +64,9 @@ public class CreatorPanelController {
         String url = body.get("url");
         if (url == null || url.isBlank()) {
             throw new IllegalArgumentException("Campo 'url' é obrigatório.");
+        }
+        if (!SAFE_URL.matcher(url).matches()) {
+            throw new IllegalArgumentException("URL inválida. Apenas http:// e https:// são permitidos.");
         }
         return mapper.toCreatorResponse(
                 profileUseCase.updateAvatarUrl(profile.getId(), url)

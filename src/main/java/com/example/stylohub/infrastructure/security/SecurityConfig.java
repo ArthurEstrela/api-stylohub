@@ -29,6 +29,13 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                // HSTS: instrui o browser a usar HTTPS por 1 ano (header só é enviado em HTTPS)
+                .headers(headers -> headers
+                        .httpStrictTransportSecurity(hsts -> hsts
+                                .maxAgeInSeconds(31_536_000)
+                                .includeSubDomains(true)
+                        )
+                )
                 .authorizeHttpRequests(auth -> auth
                         // Preflight CORS
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()

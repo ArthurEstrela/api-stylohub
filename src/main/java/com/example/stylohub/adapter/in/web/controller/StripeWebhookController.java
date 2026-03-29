@@ -45,9 +45,15 @@ public class StripeWebhookController {
             @RequestBody String payload,
             @RequestHeader("Stripe-Signature") String sigHeader) {
 
+        String webhookSecret = stripeProps.webhookSecret();
+        if (webhookSecret == null || webhookSecret.isBlank() || webhookSecret.startsWith("whsec_placeholder")) {
+            log.error("[STRIPE] webhookSecret não configurado — webhook rejeitado");
+            return ResponseEntity.internalServerError().build();
+        }
+
         Event event;
         try {
-            event = Webhook.constructEvent(payload, sigHeader, stripeProps.webhookSecret());
+            event = Webhook.constructEvent(payload, sigHeader, webhookSecret);
         } catch (SignatureVerificationException e) {
             log.warn("[STRIPE] Assinatura inválida recebida: {}", e.getMessage());
             return ResponseEntity.badRequest().build();

@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Pattern;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,6 +39,9 @@ public class PasswordResetController {
 
     record ResetPasswordRequest(
             @NotBlank String token,
-            @NotBlank @Size(min = 8) String newPassword
+            @NotBlank @Pattern(
+                    regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$",
+                    message = "A senha deve ter no mínimo 8 caracteres, uma letra maiúscula, uma minúscula e um número"
+            ) String newPassword
     ) {}
 }

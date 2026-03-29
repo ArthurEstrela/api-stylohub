@@ -9,7 +9,10 @@ public record RegisterRequest(
         @NotBlank @Email
         String email,
 
-        @NotBlank @Size(min = 8, message = "A senha deve ter no mínimo 8 caracteres")
+        @NotBlank @Pattern(
+                regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$",
+                message = "A senha deve ter no mínimo 8 caracteres, uma letra maiúscula, uma minúscula e um número"
+        )
         String password,
 
         @NotBlank
