@@ -44,6 +44,7 @@ public class SecurityConfig {
                                 "/api/auth/logout", "/api/auth/refresh",
                                 "/api/auth/forgot-password", "/api/auth/reset-password").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/p/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/public/affiliate/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/p/**").permitAll()  // Widget click tracking
                         .requestMatchers(HttpMethod.POST, "/api/webhooks/**").permitAll()  // Stripe webhooks
                         // Swagger UI / OpenAPI

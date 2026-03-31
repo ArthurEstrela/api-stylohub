@@ -13,10 +13,14 @@ public class PostgresProfileAdapter implements ProfileRepositoryPort {
 
     private final SpringDataJpaProfileRepository jpaRepo;
     private final JpaProfileMapper mapper;
+    private final com.fasterxml.jackson.databind.ObjectMapper objectMapper;
 
-    public PostgresProfileAdapter(SpringDataJpaProfileRepository jpaRepo, JpaProfileMapper mapper) {
+    public PostgresProfileAdapter(SpringDataJpaProfileRepository jpaRepo,
+                                   JpaProfileMapper mapper,
+                                   com.fasterxml.jackson.databind.ObjectMapper objectMapper) {
         this.jpaRepo = jpaRepo;
         this.mapper = mapper;
+        this.objectMapper = objectMapper;
     }
 
     @Override
@@ -49,5 +53,24 @@ public class PostgresProfileAdapter implements ProfileRepositoryPort {
     @Override
     public void deleteById(UUID id) {
         jpaRepo.deleteById(id);
+    }
+
+    @Override
+    public java.util.Optional<ProfileRepositoryPort.AffiliateWidgetInfo> findByAffiliateCode(String code) {
+        String codeJson = String.format("%%\"code\":\"%s\"%%", code);
+        return jpaRepo.findByAffiliateCode(codeJson).map(entity -> {
+            try {
+                com.example.stylohub.domain.model.config.AffiliateLinkConfig config =
+                    objectMapper.readValue(entity.getConfigJson(),
+                        com.example.stylohub.domain.model.config.AffiliateLinkConfig.class);
+                return new ProfileRepositoryPort.AffiliateWidgetInfo(
+                    entity.getId(),
+                    entity.getProfile().getId(),
+                    config.getUrl()
+                );
+            } catch (com.fasterxml.jackson.core.JsonProcessingException e) {
+                throw new IllegalStateException("Falha ao deserializar AffiliateLinkConfig", e);
+            }
+        });
     }
 }
