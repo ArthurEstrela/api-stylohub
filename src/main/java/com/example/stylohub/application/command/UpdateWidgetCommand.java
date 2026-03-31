@@ -1,5 +1,8 @@
 package com.example.stylohub.application.command;
 
+import com.example.stylohub.domain.model.config.DonationPlatform;
+import com.example.stylohub.domain.model.config.PixKeyType;
+
 import java.util.List;
 
 public record UpdateWidgetCommand(
@@ -20,5 +23,9 @@ public record UpdateWidgetCommand(
         // New embed fields
         String twitchChannel,
         String twitchClipSlug,
-        String twitterTweetId
+        String twitterTweetId,
+        // New monetization fields
+        DonationPlatform donationPlatform,
+        String pixKey,
+        PixKeyType pixKeyType
 ) {}

@@ -1,5 +1,7 @@
 package com.example.stylohub.adapter.in.web.dto;
 
+import com.example.stylohub.domain.model.config.DonationPlatform;
+import com.example.stylohub.domain.model.config.PixKeyType;
 import jakarta.validation.constraints.Pattern;
 
 import java.util.List;
@@ -25,5 +27,9 @@ public record UpdateWidgetRequest(
         // New embed fields
         String twitchChannel,
         String twitchClipSlug,
-        String twitterTweetId
+        String twitterTweetId,
+        // New monetization fields
+        DonationPlatform donationPlatform,
+        String pixKey,
+        PixKeyType pixKeyType
 ) {}

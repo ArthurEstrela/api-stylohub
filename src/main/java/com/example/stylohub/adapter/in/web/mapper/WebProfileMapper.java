@@ -41,7 +41,8 @@ public class WebProfileMapper {
                 req.videoId(), req.autoPlay(), req.showControls(), req.spotifyUri(),
                 req.compact(), req.imageUrl(), req.altText(), req.linkUrl(),
                 req.content(), req.buttonLabel(), req.successMessage(), req.formFields(),
-                req.twitchChannel(), req.twitchClipSlug(), req.twitterTweetId());
+                req.twitchChannel(), req.twitchClipSlug(), req.twitterTweetId(),
+                req.donationPlatform(), req.pixKey(), req.pixKeyType());
     }
 
     public UpdateWidgetCommand toUpdateCommand(UpdateWidgetRequest req) {
@@ -49,7 +50,8 @@ public class WebProfileMapper {
                 req.autoPlay(), req.showControls(), req.spotifyUri(), req.compact(),
                 req.imageUrl(), req.altText(), req.linkUrl(), req.content(),
                 req.buttonLabel(), req.successMessage(), req.formFields(),
-                req.twitchChannel(), req.twitchClipSlug(), req.twitterTweetId());
+                req.twitchChannel(), req.twitchClipSlug(), req.twitterTweetId(),
+                req.donationPlatform(), req.pixKey(), req.pixKeyType());
     }
 
     public UpdateThemeCommand toThemeCommand(UpdateThemeRequest req) {

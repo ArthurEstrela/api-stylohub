@@ -30,6 +30,10 @@ public class Subscription {
         return this.plan == PlanType.PRO;
     }
 
+    public boolean canUseAffiliateLinks() {
+        return this.plan == PlanType.PRO;
+    }
+
     public PlanType getPlan() { return plan; }
     public int getMaxWidgets() { return maxWidgets; }
 }

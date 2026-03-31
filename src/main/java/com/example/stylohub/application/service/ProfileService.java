@@ -81,6 +81,12 @@ public class ProfileService implements ManageProfileUseCase {
     @Override
     public Profile addWidget(UUID profileId, AddWidgetCommand command) {
         Profile profile = loadProfile(profileId);
+
+        // PRO gate for affiliate links
+        if (command.type() == WidgetType.AFFILIATE_LINK && !profile.getSubscription().canUseAffiliateLinks()) {
+            throw new BusinessRuleViolationException("Link de afiliado é exclusivo do plano PRO.");
+        }
+
         WidgetConfig config = buildWidgetConfig(command);
         profile.addWidget(config, command.order());
 
@@ -222,6 +228,13 @@ public class ProfileService implements ManageProfileUseCase {
                     Boolean.TRUE.equals(cmd.compact())
             );
             case TWITTER -> new TwitterConfig(cmd.twitterTweetId());
+            case DONATION_LINK -> new DonationLinkConfig(cmd.donationPlatform(), cmd.url(), cmd.title());
+            case PIX -> new PixConfig(cmd.pixKey(), cmd.pixKeyType(), cmd.title(), null);
+            case AFFILIATE_LINK -> {
+                // code generated server-side — never comes from the user
+                String code = UUID.randomUUID().toString().replace("-", "").substring(0, 8);
+                yield new AffiliateLinkConfig(cmd.url(), code, cmd.title());
+            }
         };
     }
 
@@ -254,6 +267,13 @@ public class ProfileService implements ManageProfileUseCase {
                     Boolean.TRUE.equals(cmd.compact())
             );
             case TWITTER -> new TwitterConfig(cmd.twitterTweetId());
+            case DONATION_LINK -> new DonationLinkConfig(cmd.donationPlatform(), cmd.url(), cmd.title());
+            case PIX -> new PixConfig(cmd.pixKey(), cmd.pixKeyType(), cmd.title(), null);
+            case AFFILIATE_LINK -> {
+                // preserve the existing code — never regenerate on update
+                String existingCode = ((AffiliateLinkConfig) widget.getConfig()).getCode();
+                yield new AffiliateLinkConfig(cmd.url(), existingCode, cmd.title());
+            }
         };
     }
 }
