@@ -57,7 +57,8 @@ public class PostgresProfileAdapter implements ProfileRepositoryPort {
 
     @Override
     public java.util.Optional<ProfileRepositoryPort.AffiliateWidgetInfo> findByAffiliateCode(String code) {
-        String codeJson = String.format("%%\"code\":\"%s\"%%", code);
+        String escaped = code.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_");
+        String codeJson = String.format("%%\"code\":\"%s\"%%", escaped);
         return jpaRepo.findByAffiliateCode(codeJson).map(entity -> {
             try {
                 com.example.stylohub.domain.model.config.AffiliateLinkConfig config =

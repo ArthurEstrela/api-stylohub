@@ -22,7 +22,7 @@ public interface SpringDataJpaProfileRepository extends JpaRepository<ProfileEnt
      * codeJson param must be: %"code":"<value>"%
      * JOIN FETCH profile to avoid lazy load.
      */
-    @Query("SELECT w FROM WidgetEntity w JOIN FETCH w.profile WHERE w.widgetType = 'AFFILIATE_LINK' AND w.configJson LIKE :codeJson")
+    @Query("SELECT w FROM WidgetEntity w JOIN FETCH w.profile WHERE w.widgetType = 'AFFILIATE_LINK' AND w.configJson LIKE :codeJson ESCAPE '\\\\'")
     Optional<WidgetEntity> findByAffiliateCode(@Param("codeJson") String codeJson);
 
     @Query("SELECT p FROM ProfileEntity p LEFT JOIN FETCH p.widgets WHERE p.id = :id")
