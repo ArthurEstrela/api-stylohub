@@ -10,5 +10,8 @@ public enum WidgetType {
     TIKTOK,
     TWITCH,
     SOUNDCLOUD,
-    TWITTER
+    TWITTER,
+    DONATION_LINK,
+    PIX,
+    AFFILIATE_LINK
 }

@@ -112,6 +112,9 @@ public class JpaProfileMapper {
                 case TWITCH -> TwitchConfig.class;
                 case SOUNDCLOUD -> SoundCloudConfig.class;
                 case TWITTER -> TwitterConfig.class;
+                case DONATION_LINK -> DonationLinkConfig.class;
+                case PIX -> PixConfig.class;
+                case AFFILIATE_LINK -> AffiliateLinkConfig.class;
             };
             return objectMapper.readValue(json, configClass);
         } catch (JsonProcessingException e) {
