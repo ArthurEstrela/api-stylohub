@@ -16,5 +16,9 @@ public record UpdateWidgetCommand(
         String content,
         String buttonLabel,
         String successMessage,
-        List<String> formFields
+        List<String> formFields,
+        // New embed fields
+        String twitchChannel,
+        String twitchClipSlug,
+        String twitterTweetId
 ) {}

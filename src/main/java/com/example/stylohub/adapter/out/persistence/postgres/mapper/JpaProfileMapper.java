@@ -108,6 +108,10 @@ public class JpaProfileMapper {
                 case IMAGE -> ImageConfig.class;
                 case TEXT -> TextConfig.class;
                 case LEAD_FORM -> LeadFormConfig.class;
+                case TIKTOK -> TikTokConfig.class;
+                case TWITCH -> TwitchConfig.class;
+                case SOUNDCLOUD -> SoundCloudConfig.class;
+                case TWITTER -> TwitterConfig.class;
             };
             return objectMapper.readValue(json, configClass);
         } catch (JsonProcessingException e) {

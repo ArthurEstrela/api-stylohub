@@ -208,11 +208,20 @@ public class ProfileService implements ManageProfileUseCase {
             case IMAGE -> new ImageConfig(cmd.imageUrl(), cmd.altText(), cmd.linkUrl());
             case TEXT -> new TextConfig(cmd.title(), cmd.content());
             case LEAD_FORM -> new LeadFormConfig(
-                    cmd.title(),
-                    cmd.buttonLabel(),
-                    cmd.successMessage(),
-                    cmd.formFields()
+                    cmd.title(), cmd.buttonLabel(), cmd.successMessage(), cmd.formFields()
             );
+            // NOTE: TikTok reuses the generic videoId field (shared with YOUTUBE) — this is intentional.
+            case TIKTOK -> new TikTokConfig(cmd.videoId());
+            case TWITCH -> new TwitchConfig(
+                    cmd.twitchChannel(),
+                    cmd.twitchClipSlug(),
+                    cmd.twitchClipSlug() != null && !cmd.twitchClipSlug().isBlank()
+            );
+            case SOUNDCLOUD -> new SoundCloudConfig(
+                    cmd.url(),
+                    Boolean.TRUE.equals(cmd.compact())
+            );
+            case TWITTER -> new TwitterConfig(cmd.twitterTweetId());
         };
     }
 
@@ -231,11 +240,20 @@ public class ProfileService implements ManageProfileUseCase {
             case IMAGE -> new ImageConfig(cmd.imageUrl(), cmd.altText(), cmd.linkUrl());
             case TEXT -> new TextConfig(cmd.title(), cmd.content());
             case LEAD_FORM -> new LeadFormConfig(
-                    cmd.title(),
-                    cmd.buttonLabel(),
-                    cmd.successMessage(),
-                    cmd.formFields()
+                    cmd.title(), cmd.buttonLabel(), cmd.successMessage(), cmd.formFields()
             );
+            // NOTE: TikTok reuses the generic videoId field (shared with YOUTUBE) — this is intentional.
+            case TIKTOK -> new TikTokConfig(cmd.videoId());
+            case TWITCH -> new TwitchConfig(
+                    cmd.twitchChannel(),
+                    cmd.twitchClipSlug(),
+                    cmd.twitchClipSlug() != null && !cmd.twitchClipSlug().isBlank()
+            );
+            case SOUNDCLOUD -> new SoundCloudConfig(
+                    cmd.url(),
+                    Boolean.TRUE.equals(cmd.compact())
+            );
+            case TWITTER -> new TwitterConfig(cmd.twitterTweetId());
         };
     }
 }

@@ -40,14 +40,16 @@ public class WebProfileMapper {
         return new AddWidgetCommand(req.type(), req.order(), req.title(), req.url(),
                 req.videoId(), req.autoPlay(), req.showControls(), req.spotifyUri(),
                 req.compact(), req.imageUrl(), req.altText(), req.linkUrl(),
-                req.content(), req.buttonLabel(), req.successMessage(), req.formFields());
+                req.content(), req.buttonLabel(), req.successMessage(), req.formFields(),
+                req.twitchChannel(), req.twitchClipSlug(), req.twitterTweetId());
     }
 
     public UpdateWidgetCommand toUpdateCommand(UpdateWidgetRequest req) {
         return new UpdateWidgetCommand(req.title(), req.url(), req.videoId(),
                 req.autoPlay(), req.showControls(), req.spotifyUri(), req.compact(),
                 req.imageUrl(), req.altText(), req.linkUrl(), req.content(),
-                req.buttonLabel(), req.successMessage(), req.formFields());
+                req.buttonLabel(), req.successMessage(), req.formFields(),
+                req.twitchChannel(), req.twitchClipSlug(), req.twitterTweetId());
     }
 
     public UpdateThemeCommand toThemeCommand(UpdateThemeRequest req) {
